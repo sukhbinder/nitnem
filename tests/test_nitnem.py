@@ -1,4 +1,4 @@
-from nitnem.cli import cli
+from nitnem import cli
 
 
 def test_create_parser():
