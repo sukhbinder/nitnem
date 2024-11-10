@@ -3,6 +3,25 @@ import subprocess
 import os
 from datetime import datetime
 
+PAATH = {
+    "auto": None,
+    "japji": "JapjiSahibBhaiHarbansSin.mp3",
+    "rehras": "RehrasSahib-BhaiHarbansSinghJi.mp3",
+    "sukhmani": "SukhmaniSahibBhaiHarbans.mp3",
+}
+
+
+def check_time():
+    now = datetime.now()
+    return (now.hour >= 2) and (now.hour < 15)
+
+
+def get_assets_dir():
+    asset_dir = os.path.dirname(__file__)
+    asset_dir = os.path.join(asset_dir, "assets")
+    return asset_dir
+
+
 def is_recently_modified(file_path, delay_duration):
     """
     Check if a file was modified within the specified delay duration.
@@ -24,13 +43,14 @@ def is_recently_modified(file_path, delay_duration):
     # Check if the modified time is within the delay duration
     return modified_time > cutoff_time
 
+
 def play_audio_if_needed(audio_file, delay_duration):
     # Generate a unique tracking file name based on the audio file name
     played_file_path = os.path.splitext(audio_file)[0] + "_played.txt"
 
     # Create the played file if it does not exist
     if not os.path.exists(played_file_path):
-        with open(played_file_path, 'w') as f:
+        with open(played_file_path, "w") as f:
             f.write(datetime.now().isoformat())
         subprocess.run(["afplay", audio_file])
         return
@@ -38,52 +58,39 @@ def play_audio_if_needed(audio_file, delay_duration):
     # Check if the played file was modified within the delay duration
     if not is_recently_modified(played_file_path, delay_duration):
         # Update the played file with the current timestamp
-        with open(played_file_path, 'w') as f:
+        with open(played_file_path, "w") as f:
             f.write(datetime.now().isoformat())
         print(f"Playing: {audio_file}")
-
         # Run the subprocess to play the audio
         subprocess.run(["afplay", audio_file])
     else:
-        print(f"Audio file '{audio_file}' was played within the last {delay_duration} hours. Skipping playback.")
+        print(
+            f"Audio file '{audio_file}' was played within the last {delay_duration} hours. skipping playback."
+        )
 
-def parse_arguments():
-    """
-    Parse command-line arguments using argparse.
 
-    Returns:
-        Namespace: Parsed arguments.
-    """
-    parser = argparse.ArgumentParser(
-        description="Play an MP3 file if it hasn't been played in the specified delay duration."
-    )
-    parser.add_argument(
-        "audio_file",
-        type=str,
-        help="Path to the MP3 audio file."
-    )
-    parser.add_argument(
-        "-d",
-        "--delay-duration",
-        type=int,
-        default=3,
-        help="Delay duration in hours to wait before playing the file again."
-    )
+def mainrun(args):
+    if args.audio_file is not None:
+        # Validate the audio file path
+        if not os.path.exists(args.audio_file):
+            raise FileNotFoundError(f"Audio file '{args.audio_file}' does not exist.")
+        if not args.audio_file.lower().endswith(".mp3"):
+            raise RuntimeError("Only MP3 files are Supported.")
+        audio_file = args.audio_file
+    else:
+        if args.audio_choice == "auto":
+            if check_time():  # Morning and day time
+                audio_file = os.path.join(get_assets_dir(), PAATH["japji"])
+            else:
+                audio_file = os.path.join(get_assets_dir(), PAATH["rehras"])
+        else:
+            if args.audio_choice.lower() in PAATH.keys():
+                audio_file = os.path.join(
+                    get_assets_dir(), PAATH[args.audio_choice.lower()]
+                )
 
-    # Parse the arguments
-    args = parser.parse_args()
-
-    # Validate the audio file path
-    if not os.path.exists(args.audio_file):
-        parser.error(f"Audio file '{args.audio_file}' does not exist.")
-    if not args.audio_file.lower().endswith(".mp3"):
-        parser.error("Only MP3 files are supported.")
-
-    return args
-
-if __name__ == "__main__":
-    # Parse arguments
-    args = parse_arguments()
-
-    # Play the audio if needed
-    play_audio_if_needed(args.audio_file, args.delay_duration)
+    delay_duration = max(0, args.delay_duration)
+    try:
+        _ = play_audio_if_needed(audio_file, delay_duration)
+    except KeyboardInterrupt:
+        print("User Stopped.")
