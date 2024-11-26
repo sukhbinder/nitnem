@@ -10,7 +10,7 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License"
 ]
 dependencies = [
-    "colorama"
+    "playsound ; sys_platform == 'win32'",
 ]
 
 [project.urls]

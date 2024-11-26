@@ -1,13 +1,19 @@
-import argparse
 import subprocess
 import os
 from datetime import datetime
+import sys
 
 PAATH = {
     "auto": None,
     "japji": "JapjiSahibBhaiHarbansSin.mp3",
     "rehras": "RehrasSahib-BhaiHarbansSinghJi.mp3",
     "sukhmani": "SukhmaniSahibBhaiHarbans.mp3",
+}
+
+PLAYERS ={
+    "darwin": ["afplay"],
+    "linux2": ["omxplayer"],
+    "win32":  [ "python","-m", "playsound"] 
 }
 
 
@@ -52,7 +58,7 @@ def play_audio_if_needed(audio_file, delay_duration):
     if not os.path.exists(played_file_path):
         with open(played_file_path, "w") as f:
             f.write(datetime.now().isoformat())
-        subprocess.run(["afplay", audio_file])
+        subprocess.run(PLAYERS[sys.platform] + [audio_file])
         return
 
     # Check if the played file was modified within the delay duration
@@ -62,7 +68,7 @@ def play_audio_if_needed(audio_file, delay_duration):
             f.write(datetime.now().isoformat())
         print(f"Playing: {audio_file}")
         # Run the subprocess to play the audio
-        subprocess.run(["afplay", audio_file])
+        subprocess.run(PLAYERS[sys.platform] + [audio_file])
     else:
         print(
             f"Audio file '{audio_file}' was played within the last {delay_duration} hours. skipping playback."
