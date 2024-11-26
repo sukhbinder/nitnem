@@ -1,11 +1,11 @@
 [project]
 name = "nitnem"
-version = "0.3"
+version = "0.3.1"
 description = "Nitnem using python for Mac and possibly windows latter"
 readme = "README.md"
 authors = [{name = "Sukhbinder Singh"}]
 license = {text = "Apache-2.0"}
-requires-python = ">=3.8"
+requires-python = ">=3.7"
 classifiers = [
     "License :: OSI Approved :: Apache Software License"
 ]
