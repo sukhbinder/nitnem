@@ -10,10 +10,10 @@ PAATH = {
     "sukhmani": "SukhmaniSahibBhaiHarbans.mp3",
 }
 
-PLAYERS ={
+PLAYERS = {
     "darwin": ["afplay"],
     "linux2": ["omxplayer"],
-    "win32":  [ "python","-m", "playsound"] 
+    "win32": ["python", "-m", "playsound"],
 }
 
 
