@@ -7,8 +7,11 @@
 
 Nitnem using python for Mac , Windows and Rashberry Pi.
 
-
 For rashberry pi, this uses `omxplayer`, On mac it uses `afplay` and on windows it will use `playsound` 
+
+
+Nitnem Sahib (literally Daily Routine) is a collection of Sikh hymns (Gurbani) to be read minimally 3 different times of the day.
+
 
 ## Installation
 
