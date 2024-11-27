@@ -1,6 +1,6 @@
 [project]
 name = "nitnem"
-version = "0.3.2"
+version = "0.3.3"
 description = "Nitnem using python for Mac and possibly windows latter"
 readme = "README.md"
 authors = [{name = "Sukhbinder Singh"}]
@@ -10,7 +10,7 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License"
 ]
 dependencies = [
-    "playsound ; sys_platform == 'win32'",
+    "afplay-win ; sys_platform == 'win32'",
 ]
 
 

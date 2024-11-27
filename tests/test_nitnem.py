@@ -1,6 +1,4 @@
 from nitnem import cli
-import pytest
-import argparse
 
 
 def test_create_parser():

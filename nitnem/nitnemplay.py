@@ -13,7 +13,7 @@ PAATH = {
 PLAYERS = {
     "darwin": ["afplay"],
     "linux": ["omxplayer"],
-    "win32": ["python", "-m", "playsound"],
+    "win32": ["afplay"],
 }
 
 
