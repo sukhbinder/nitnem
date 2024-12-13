@@ -12,6 +12,7 @@ For rashberry pi, this uses `omxplayer`, On mac it uses `afplay` and on windows 
 
 Nitnem Sahib (literally Daily Routine) is a collection of Sikh hymns (Gurbani) to be read minimally 3 different times of the day.
 
+Read this blog post for [a background on this app](https://sukhbinder.wordpress.com/2024/12/09/nitnem/)
 
 ## Installation
 
