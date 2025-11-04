@@ -16,7 +16,12 @@ def create_parser():
     )
 
     parser.add_argument(
-        "-a", "--audio-file", type=str, default=None, help="Path to the MP3 audio file."
+        "-a",
+        "--audio-file",
+        type=str,
+        default=None,
+        nargs="?",
+        help="Path to MP3 file, or pipe a file name.",
     )
     parser.add_argument(
         "-d",
