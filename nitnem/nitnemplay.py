@@ -76,6 +76,12 @@ def play_audio_if_needed(audio_file, delay_duration):
 
 
 def mainrun(args):
+    # If -a flag was given but no value, check if something is piped in
+    if args.audio_file is None and not sys.stdin.isatty():
+        piped_value = sys.stdin.read().strip()
+        if piped_value:
+            args.audio_file = piped_value
+
     if args.audio_file is not None:
         # Validate the audio file path
         if not os.path.exists(args.audio_file):
