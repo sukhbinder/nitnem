@@ -1,6 +1,6 @@
 [project]
 name = "nitnem"
-version = "0.3.3"
+version = "0.3.4"
 description = "Nitnem using python for Mac and possibly windows latter"
 readme = "README.md"
 authors = [{name = "Sukhbinder Singh"}]
@@ -15,7 +15,7 @@ dependencies = [
 
 
 [tool.setuptools.package-data]
-"*" = ["*.*"] 
+"*" = ["*.*"]
 
 [project.urls]
 Homepage = "https://github.com/sukhbinder/nitnem"
