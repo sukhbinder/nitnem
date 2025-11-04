@@ -56,7 +56,6 @@ def test_play_audio_if_needed():
             with patch("nitnem.nitnemplay.datetime") as mock_datetime:
                 with patch("nitnem.nitnemplay.subprocess.run") as mock_subprocess_run:
                     with patch("builtins.open", mock_open()) as mock_file_open:
-
                         # Mock current time
                         mock_datetime.now.return_value = datetime(2024, 1, 1, 12, 0, 0)
 
@@ -69,7 +68,7 @@ def test_play_audio_if_needed():
                         nitnemplay.play_audio_if_needed("test.mp3", 1)
 
                         mock_subprocess_run.assert_called_once_with(
-                            nitnemplay.PLAYERS["darwin"] + ["test.mp3"]
+                            nitnemplay.PLAYERS[sys.platform] + ["test.mp3"]
                         )
                         mock_file_open.assert_called_with("test_played.txt", "w")
                         mock_file_open().write.assert_called_with(
@@ -99,7 +98,7 @@ def test_play_audio_if_needed():
                         nitnemplay.play_audio_if_needed("test.mp3", 1)
 
                         mock_subprocess_run.assert_called_once_with(
-                            nitnemplay.PLAYERS["darwin"] + ["test.mp3"]
+                            nitnemplay.PLAYERS[sys.platform] + ["test.mp3"]
                         )
                         mock_file_open.assert_called_with("test_played.txt", "w")
                         mock_file_open().write.assert_called_with(
